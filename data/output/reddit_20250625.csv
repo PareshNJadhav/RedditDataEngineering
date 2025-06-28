@@ -1,0 +1,443 @@
+id,title,score,num_comments,author,selftext,created_utc,url,upvote_ratio,over_18,edited,spoiler,stickied
+1ljq8r4,Unit tests != data quality checks. CMV.,160,26,EarthGoddessDude,"Unit tests <> data quality checks, for you SQL nerds :P
+
+In post after post, I see people conflating unit/integration/e2e testing with data quality checks. I acknowledge that the concepts have some overlap,  the idea of correctness, but to me they are distinct in practice. 
+
+Unit testing is about making sure that some dependency change or code refactor doesn’t result in bad code that gives wrong results. Integration and e2e testing are about the whole integrated pipeline performing as expected. All of those could, in theory, be written as pytest tests (maybe). It’s a “build time” construct, ie *before* your code is released. 
+
+Data quality checks are about checking the integrity of production data as it’s already flowing, each time it flows. It’s a “runtime” construct, ie *after* your code is released. 
+
+I’m open to changing my mind on this, but I need to  be persuaded. 
+
+",2025-06-24 23:20:59,https://www.reddit.com/r/dataengineering/comments/1ljq8r4/unit_tests_data_quality_checks_cmv/,0.94,False,False,False,False
+1lk96qs,I performed Redshift cost reduction from 60k to 42k,95,48,abhigm,"Optimization: A Deep Dive into Our $60K to $42k/Month Success
+As a Redshift DBA, I successfully spearheaded a cost reduction initiative, slashing our monthly spend from a staggering $60,000 to just $42—and we're not stopping there. This significant achievement was driven by a meticulous approach to understanding and optimizing our Redshift environment.
+Our key cost optimization techniques included:
+ * Strategic DISTKEY and SORTKEY Refinement: We began by thoroughly analyzing all queries to intelligently redefine distribution and sort keys. This fundamental step ensures data is stored and retrieved in the most efficient manner, drastically reducing scan times and I/O.
+ * Optimized Workload Management (WLM): By configuring Auto WLM with precise priority settings, we ensured critical queries received the necessary resources while preventing less urgent tasks from monopolizing the system. This balanced approach significantly improved overall cluster efficiency and reduced peak usage costs.
+ * User-Centric Query Cost Analysis: We implemented a system to track the 7-day query scan cost percentage change for each user. This provided invaluable insights into individual user query patterns, allowing us to identify and address inefficient query behavior proactively.
+ * Proactive Query Monitoring and Anomaly Detection: We meticulously monitored each user's query count and identified slow queries, leveraging generic hash functions for efficient tracking. This allowed us to pinpoint performance bottlenecks and optimize problematic queries before they significantly impacted costs.
+ * Centralized Query Validation: To maintain optimal performance and cost efficiency, all new queries are now rigorously reviewed and validated by our DBA team before deployment. This prevents the introduction of inefficient queries that could drive up costs.
+ * Regular Table Statistics Updates: We established a routine for updating statistics on all tables. Accurate statistics enable the Redshift query optimizer to generate the most efficient execution plans, leading to faster queries and lower resource consumption.
+ * Consistent Table Vacuuming and Sorting: We implemented a strategy for regular VACUUM SORT operations on all tables. This reclaims space and physically reorders data according to sort keys, dramatically improving query performance and reducing scan costs.
+ * Time-Series Data Optimization: For time-series data, we focused on sorting tables based on timestamps and creating dedicated time-series tables. This design pattern is highly effective for queries involving time ranges, leading to significant performance gains and cost savings.
+ * Focus on Query and Scan Cost over CPU: Our philosophy shifted from merely monitoring CPU utilization to a laser focus on query and scan costs within WLM. We recognized that true optimization lies in reducing the amount of data scanned and processed, rather than just ensuring CPU availability.
+ * Aborted Query and Disk I/O Analysis: We actively monitored aborted query counts and analyzed disk I/O scanning costs for each query. Identifying and resolving issues that lead to aborted queries or high I/O contributes directly to cost reduction by minimizing wasted resources.
+This comprehensive approach has not only yielded substantial cost savings but has also created a more performant and manageable Redshift environment. We continue to explore new avenues for optimization, committed to maximizing efficiency and minimizing expenditure.",2025-06-25 15:46:39,https://i.redd.it/1yumeosig39f1.jpeg,0.73,False,False,False,False
+1ljmd4d,"We just released Firebolt Core - a free, self-hosted OLAP engine (debuting in the #1 spot on ClickBench)",40,6,FireboltCole,"Up until now, Firebolt has been a cloud data solution that's strictly pay-to-play. But today that changes, as we're launching [Firebolt Core](https://github.com/firebolt-db/firebolt-core), a self-managed version of Firebolt's query engine with all the same features, performance improvements, and optimizations. It's built to scale out as a production-grade, distributed query engine capable of providing low latency, high concurrency analytics, ELT at scale, and particularly powerful analytics on Iceberg, but it's also capable of running on small datasets on a single laptop for those looking to give it a lightweight try.
+
+If you're interested in learning more about Core and its launch, Firebolt's CTO Mosha Pasumansky and VP of Engineering Benjamin Wagner wrote [a blog explaining more about what it is, why we built it, and what you can do with it.](https://www.firebolt.io/blog/introducing-firebolt-core) It also touches on the topic of open source - which Core isn't.
+
+One extra goodie is that thanks to all the work that's gone into Firebolt and the fact that we included all of the same performance improvements in Core, it's immediately debuting at the top spot on the [Clickbench benchmark.](https://benchmark.clickhouse.com/) Of course, we're aware that performance isn't everything, but Firebolt is built from the ground up to be as performant as possible, and it's meant to power analytical and application workloads where minimizing query latency is critical. When that's the space you're in, performance matters a lot... and so you can probably see why we're excited.
+
+Strongly recommend giving it a try yourself, and let us know what you think!",2025-06-24 20:40:30,https://www.reddit.com/r/dataengineering/comments/1ljmd4d/we_just_released_firebolt_core_a_free_selfhosted/,0.88,False,False,False,False
+1lk39fh,Im exhausted and questioning everything,19,4,neosisrube,"I moved from a startup into a corporate job ( digital banking ) a few months ago. I’m from Malaysia , for context. I’m still under probation. And honestly, I don’t know anymore if I’m underperforming, or if I’m just stuck in a dysfunctional culture that burns people out.
+
+In my previous role, I worked as a backend engineer. I had autonomy. Things moved fast. Feedback was immediate. Now, I’m in an environment where expectations are vague, processes are messy, and communication is passive-aggressive.
+
+One example: we have a support schedule to help vendors load data into internal systems. They can’t do it directly, so someone from our side has to run everything manually. It’s basic, repetitive work , I once suggested scripting it to make the process cleaner. That suggestion was ignored. So we keep doing it the hard way.
+
+Recently I got pinged after working hours to join a “5-minute call to load something” , something that would run for 10 hours. There was no advance notice, just the assumption I’d be available. I was already off shift, but even then, the next day came with a passive-aggressive remark: “Didn’t expect this from you.” This wasn’t the first time either.
+
+Then there’s the feedback I’ve been given. My boss told me twice , that I lack “initiative.” The most recent example was over documentation. I was asked to update some system design docs. I did. I even left a comment inside tagging him, asking for input , which should’ve triggered an email notification. But I didn’t follow up in Teams because I got pulled into other work. I was literally about to update him the next morning when he messaged me and immediately launched into a rant about me needing to be more proactive and take ownership. Even though the work had been done. However, sometime he would dished out praise but rarely. 
+
+Meanwhile, I’m putting in 10–15 hour days. I’m exhausted. I forget things. I don’t have any more bandwidth. I’m not even doing meaningful engineering work , just reacting to whatever lands in my inbox or chat window. No ownership, no growth. Just people assuming I’ll pick up anything and everything.
+
+This is starting to affect my personal life. I carry the resentment home. I’m always tired. I’m checked out even when I’m not working. I literally can’t take a shit without being pulled into a meeting.
+
+So now I’m asking: is this a sign I’m not fit for this kind of culture? Am I truly missing something basic? Or is this what happens when you take someone from a fast, transparent, builder-type environment and drop them into a place where nobody wants to own problems , they just want someone to quietly clean up the mess?
+
+If you’ve been through this, I’d appreciate perspective.",2025-06-25 11:34:10,https://www.reddit.com/r/dataengineering/comments/1lk39fh/im_exhausted_and_questioning_everything/,0.89,False,False,False,False
+1ljlx86,Feeling bad about todays tech screening with amazon for BIE,16,11,Cheeezzzyy,"Post Update: Thank you so much for your inputs :), unfortunately i got a rejection email today and upon asking the recruiter she told me that the team loved you and the feedback was great but they got more experienced person for the role!
+
+\--------------------------------------------------------------------------------------------------------------------------  
+
+
+I had my tech screening today for BIE(L5) role with amazon.
+
+We started with discussing about my prev experience and she asked me LP's. I think i nailed this one, she really liked my how i framed everything in STAR format. I put in all the things that i did, what the situation was and how my work impacted my business. We also discussed about the tech stack that i used in depth!
+
+Then later on came 4 SQL problems 1 easy, 2 med and 1 hard.
+
+I had to solve them in 30 mins and explain my logic while writing sql queries.
+
+I did solved all of them but, as i was in a rush i made plenty of mistakes in errors like:
+
+selet instead of select | join on col1 - col 2 instead of = | procdt\_id instead of product\_id
+
+But after my call, i checked with the solutions and all my logic were right. I made all this silly mistakes in stress and being in hurry!
+
+We greeted each other at the end of the call and i asked few questions about the team and projects that are going on right now and we disconnected!
+
+Before disconnecting, she said ""All the best for your job search"" and dropped!
+
+Maybe i am overthinking this, but did i got rejected? or was that normal !
+
+I don't know what to do, its eating me up :(",2025-06-24 20:23:04,https://www.reddit.com/r/dataengineering/comments/1ljlx86/feeling_bad_about_todays_tech_screening_with/,0.76,False,False,False,False
+1lk78ub,"The nightmare of DE, processing free text input data, HELP !",17,22,HMZ_PBI,"Fellow engineers, here is the case:
+
+You have a dataset of 2 columns id and degrees, with over 1m records coming from free text input box, when i say free text it really means it, the data comes from a forum where candidates fill it with their level of studies or degree, so you can expect anything that the human mind can write there, like typos, instead of typing the degree some typed their field, some their tech stack, some even their GPA, some in other languages like Spanish, typos all over the place
+
+\---------------------------
+
+Sample data:
+
+id, degree
+
+1, technician in public relations
+
+2, bachelor in business management
+
+3, high school diploma
+
+4, php
+
+5, dgree in finance
+
+6, masters in cs
+
+7, mstr in logisticss
+
+\----------------------------------
+
+The goal is to add an extra column category which will have the correct official equivalent degree to each line
+
+Sample data of the goal output:
+
+  
+\--------------------------
+
+id, degree, category
+
+1, technician in public relations, vocacional degree in public relations
+
+2, bachelor in business management, bachelors degree in business management
+
+3, high school diploma, high school
+
+4, php, degree in computer science
+
+5, dgree in finance, degree in finance
+
+6, masters in cs,  masters degree in computer science
+
+7, mstr in logisticss, masters degree in logistics
+
+\---------------------------------  
+
+
+What i have thought of in creating a master table with all the official degrees, then joining it to the dataset, but since the records are free text input very very few records will even match in the join
+
+What approach, ideas, methods you would implement to resolve this buzzle ?",2025-06-25 14:31:19,https://www.reddit.com/r/dataengineering/comments/1lk78ub/the_nightmare_of_de_processing_free_text_input/,0.96,False,False,False,False
+1ljlzxt,Chuck Data - Agentic Data Engineering CLI for Databricks (Feedback requested),9,2,caleb-amperity,"Hi all,
+
+My name is Caleb, I am the GM for a team at a company called Amperity that just launched an open source CLI tool called [Chuck Data](https://chuckdata.ai). 
+
+The tool runs exclusively on Databricks for the moment. We launched it last week as a **free** new offering in research preview to get a sense of whether this kind of interface is compelling to data engineering teams. This post is mainly conversational and looking for reactions/feedback. We don't even have a monetization strategy for this offering. Chuck is free and open source, but just for full disclosure what we're getting out of this is signal to drive our engineering prioritization for our other products.
+
+# General Pitch
+
+The general idea is similar to Claude Code except where Claude Code is designed for general software development, Chuck Data is designed for data engineering work in Databricks. You can use natural language to describe your use case and Chuck can help plan and then configure jobs, notebooks, data models, etc. in Databricks. 
+
+So imagine you want to set up identity resolution on a bunch of tables with customer data. Normally you would analyze the data schemas, spec out an algorithm, implement it by either configuring an ETL tool or writing some scripts, etc. With Chuck you would just prompt it with ""I want to stitch these 5 tables together"" and Chuck can analyze the data, propose a plan and provide a ML ID res algorithm and then when you're happy with its plan it will set it up and run it in your Databricks account.
+
+Strategy-wise, Amperity has been selling a SAAS CDP platform for a decade and configuring it with services. So we have a ton of expertise setting up ""Customer 360"" models for enterprise companies at scale with any different kind of data. We're seeing an opportunity with the proliferation of LLMs and the agentic concepts where we think it's viable to give data engineers an alternative to ETLs and save tons of time with better tools. 
+
+Chuck is our attempt to make a tool trying to realize that vision and get it into the hands of the users ASAP to get a sense for what works, what doesn't, and ultimately whether this kind of natural language tooling is appealing to data engineers.
+
+My goal with this post is to drive some awareness and get anyone who uses Databricks regularly to try it out so we can learn together. 
+
+# How to Try Chuck Out
+
+Chuck is a Python based CLI so it should work on any system. 
+
+You can install it on MacOS via Homebrew with:
+
+    brew tap amperity/chuck-data
+    brew install chuck-data
+
+Via Python you can install it with pip with:
+
+    pip install chuck-data
+
+Here are links for more information:
+
+* Git repo: [https://github.com/amperity/chuck-data](https://github.com/amperity/chuck-data)
+* Website: [https://chuckdata.ai](https://chuckdata.ai)
+* Launch video: [https://www.youtube.com/watch?v=E3BBaLPYukA](https://www.youtube.com/watch?v=E3BBaLPYukA) 
+* Discord: [https://discord.gg/f3UZwyuQqe](https://discord.gg/f3UZwyuQqe)
+
+If you would prefer to try it out on fake data first, we have a wide variety of fake data sets in the Databricks marketplace. You'll want to copy it into your own Catalog since you can't write into Delta Shares.  [https://marketplace.databricks.com/?searchKey=amperity&sortBy=popularity](https://marketplace.databricks.com/?searchKey=amperity&sortBy=popularity)
+
+I would recommend [the datasets in the ""bronze"" schema for this one specifically](https://marketplace.databricks.com/details/6bc4843f-3809-4995-8461-9756f6164ddf/Amperity_Amperitys-Identity-Resolution-Agent-30-Day-Trial).
+
+  
+Thanks for reading and any feedback is welcome!",2025-06-24 20:26:05,https://www.reddit.com/r/dataengineering/comments/1ljlzxt/chuck_data_agentic_data_engineering_cli_for/,0.74,False,False,False,False
+1ljsy5p,Whats your Data Stack for Takehomes?,6,11,TacoTuesday69_420,Just that. When you do a takehome assignment for a job application what does your stack look like. I spin up a local postgres in docker and boot up a dbt project but I hate having to live outside of my normal BI tool for visualization / analytics work. ,2025-06-25 01:28:45,https://www.reddit.com/r/dataengineering/comments/1ljsy5p/whats_your_data_stack_for_takehomes/,0.81,False,False,False,False
+1lk01f2,Extracting redirects from a HAR file,6,0,JumbleGuide,,2025-06-25 08:16:29,https://medium.com/@heyda/extracting-redirects-from-a-har-file-f559af373877,0.88,False,False,False,False
+1lk803u,How are you tracking data freshness / latency across tools like Fivetran + dbt?,5,6,Aggressive-Practice3,"We’re using Fivetran to sync data from sources like CommerceTools into a Postgres warehouse. Then we have dbt building out models, and Airflow orchestrating everything.
+
+What I want is a smart way to monitor data latency; like, how long it takes from when data is updated in the source system to when it shows up in our golden layer (final dbt models). We will be haiving SLAs for that.
+
+I'm planning to write a python script that pulls timestamps from both the source systems and our DWH, compares them, and tracks the latency end-to-end. It'll run outside of Airflow because our scheduler can go down, and we don’t have monitoring in place for that yet (that’s a discussion for another day...).
+
+How do you track freshness or latency e2e > from source to your final models?
+
+Would love to hear any setups, hacks, or horror stories...  
+Thank you
+
+EDIT : we are using PostgreSQL as DWH -- and dbt freshness is not supported on that adaptor ",2025-06-25 15:01:00,https://www.reddit.com/r/dataengineering/comments/1lk803u/how_are_you_tracking_data_freshness_latency/,1.0,False,False,False,False
+1lk7ah5,"Trino + iceberg + hive metastore setup, trino not writing tables",3,2,Sharmazan,"Hey, since there's not much resources on this topic (at least I couldn't find what i wanted), I'll ask here, here's the situation I'm in:  
+I've set up trino coordinator and worker on 2 separate servers, I've got 1 storage server for Iceberg, and 1 server for hive catalog. Since all these servers are in LAN, storage is mounted via nfs on both trino worker and coordinator and hive catalog server. When I create table from trino, It creates it, and acts as a success, even when later i insert values into it and select it, it acts as everything is normal, even selecting .""table$files"" works as expected showing correct path. But when I check the path its meant to be writing into, its empty. as I create a table, an empty folder with table name and uuid is created, but no data/metadata inside. Most likely it is being cached somewhere, because if i reboot the trino server (and not restart trino, bcz that does not change it), the message says: 
+
+Query <id> failed: Metadata not found in metadata location for table <table\_name>
+
+but cant create same table before I drop current one. BTW, dropping the table is also success, but does not remove the folder from the original storage. (the empty folder it creates)
+
+Please help me, I'm about to burn this place down and migrate to different country.",2025-06-25 14:33:11,https://www.reddit.com/r/dataengineering/comments/1lk7ah5/trino_iceberg_hive_metastore_setup_trino_not/,0.81,False,False,False,False
+1lk0xyh,SaaS builds a new API for each individual integration,3,1,dfwtjms,"Have you ever encountered anything like this? So instead of maintaining one good API they develop a custom API for each integration. They'll also add only what's the absolute minimum. How are they going to maintain all that mess?  
+
+They also think the API doesn't need any sorting or filtering and querying millions of rows daily is fine even though the rate limiting doesn't allow it. To me the point of an API is that it serves all the common use cases and is a pretty universal way to interface with the system. I think they are making things difficult on purpose and artificially creating themselves billable hours. ",2025-06-25 09:17:34,https://www.reddit.com/r/dataengineering/comments/1lk0xyh/saas_builds_a_new_api_for_each_individual/,0.72,False,False,False,False
+1ljk4pi,Roles that involve audio?,5,2,SIumped,"I’ve always been aiming for a job in audio SWE or something of that nature. This internship, I’m doing data engineering in a field entirely separate from audio. I feel a little bad about this, but I was wondering if there’s any ways to combine audio and DE, or at least touch audio. 
+",2025-06-24 19:13:54,https://www.reddit.com/r/dataengineering/comments/1ljk4pi/roles_that_involve_audio/,0.78,False,False,False,False
+1lk5ld7,lakeFS Iceberg REST Catalog: Data Version Control for Structured Data,3,0,jtsymonds,This is a key addition from the Treeverse team and well timed for the end of the OTF wars. Iceberg has won and data version control needs to operate at scale and against structured data. ,2025-06-25 13:24:37,https://lakefs.io/blog/lakefs-iceberg-rest-catalog/,0.81,False,False,False,False
+1lk5efs,Dear data engineer ( asking help for a junior ),4,7,Fluffy-Moose6907,"Dear friends, I recently finished my evening course for Data Analytics while doing 40 hour work week as a front end dev.
+
+I was very unhappy as a webdev since the work pressure was really high and I couldn’t keep with while trying to develop my skills.
+
+I deeply enjoyed my data analytics course ( Learned Powerbi, SSMS already knew some SQL, general DWH / ETL )
+
+This month ( start of june ) I started as a BI specialist, ( fancy word for Data engineer ). It has significantly less powerbi than I expected and is actually 80% modelling / DWH work.
+
+There isn’t any direct Data employee, they have a consultant that visits once every 2 weeks and I can contact him online. When he’s teaching me he’s very helpful and I learn a lot. But like any consultant he’s incredibly bizzy as per usual.
+
+There is so much I still need to learn and realize. I am 22, and super willing to learn more in my free time, luckily my work environment isn’t soulcrushing but I want to make something of the opportunity. So far my work has provided me with udemy and I’m also going to get DataCamp. Still I was wondering if any of you guys had advice for me to improve myself and become a worthy Data engineer / data guy.
+
+Since right now it almost feels like starting as junior dev again that doesn’t know crap. But I’m motivated to work to get past that point. I just get the feeling it might not come from just doing my best at my workplace, just like when I was working as a webdev. I don’t want to fall behind my age <=> expected skill level
+
+Wish you guys a good day and thank you for whatever advice you can help me out with.
+
+Hope to have a long and succesful career in data :)",2025-06-25 13:16:17,https://www.reddit.com/r/dataengineering/comments/1lk5efs/dear_data_engineer_asking_help_for_a_junior/,0.7,False,False,False,False
+1lkalnw,Request for Architecture Review – Talend ESB High-Volume XML Processing,2,1,Plane_Expression2000,"
+Hello,
+
+In my current role, I’ve taken over a data exchange system handling approximately 50,000 transactions per day. I’m seeking your input or suggestions for a modernized architecture using the following technologies:
+	•	Talend ESB
+	•	ActiveMQ
+	•	PostgreSQL
+
+Current Architecture:
+
+1.	Input
+The system exposes 10 REST/SOAP APIs to receive data structured around a core XML (id, field1, field2, xml, etc.). Each API performs two actions:
+	•	Inserts the data into the PostgreSQL database
+	•	Sends the id to an ActiveMQ queue for downstream processing
+
+2.	Transformation
+A job retrieves the XML and transforms it into a generic XML format using XSLT.
+
+3.	Target Eligibility
+The system evaluates the eligibility of the data for 30 possible target applications by calling 30 separate APIs (Talend ESB API). Each API:
+	•	Analyzes the generic XML and returns a boolean (true/false)
+	•	If eligible, publishes the id to the corresponding ActiveMQ queue
+	•	The responses are aggregated into a JSON object:
+
+{
+  ""target1"": true,
+  ...
+  ""target30"": false
+}
+
+This JSON is then stored in the database.
+
+4.	Distribution
+One job per target reads its corresponding ActiveMQ queue and routes the data to the target system via the appropriate protocol (database, email, etc.)
+
+Main Issue:
+This architecture struggles under high load due to the volume of API calls (30 per transaction).
+
+I would appreciate your feedback or suggestions for improving and modernizing this pipeline.",2025-06-25 16:39:38,https://www.reddit.com/r/dataengineering/comments/1lkalnw/request_for_architecture_review_talend_esb/,1.0,False,False,False,False
+1lk96w3,How to hire your first data engineer (and when not to),2,0,ivanovyordan,,2025-06-25 15:46:48,https://open.substack.com/pub/datagibberish/p/how-to-hire-your-first-data-engineer?utm_source=share&utm_medium=android&r=odlo3,1.0,False,False,False,False
+1lk6ihx,Using federation for data movement?,2,2,gman1023,"Wondering if anyone has used federation for moving data around. I know it doesn't scale for hundreds of millions of records but what about for small data sets?
+
+  
+This avoid the tedious process creating an etl in airflow to export from mssql to s3 and then loading to databricks staging. And it's all in SQL which we prefer over python.
+
+Main questions are around cost and performance
+
+**Example flow:** 
+
+On Databricks, read lookup table from mssql using federation and then merge it into a new table.  
+
+  
+**Example flow 2:**
+
+\* on databricks, read a large table (100M) but with a filter on last\_updated (indexed field)based on last import. this filter is pushed down to mssql so it should run fast. this only brings in 1 million records and merges into the destination table. 
+
+\* [https://docs.aws.amazon.com/redshift/latest/dg/federated-overview.html](https://docs.aws.amazon.com/redshift/latest/dg/federated-overview.html)  
+\* [https://docs.databricks.com/aws/en/query-federation/](https://docs.databricks.com/aws/en/query-federation/)",2025-06-25 14:02:16,https://www.reddit.com/r/dataengineering/comments/1lk6ihx/using_federation_for_data_movement/,0.76,False,False,False,False
+1lkch21,dbt environments,1,2,Icy-Western-3314,"Can someone explain why dbt doesn't recommend a testing environment? In the documentation they recommend dev and prod, but no testing?",2025-06-25 17:49:37,https://www.reddit.com/r/dataengineering/comments/1lkch21/dbt_environments/,1.0,False,False,False,False
+1lkakxl,Dbt type 2 tables,1,3,plantsstampslamps,"If I have a staging, int, and mart layers, which layer should track data changes? The stg layer (build off snapshots), or only the dim/fct tables in the mart? What is best practice for this?",2025-06-25 16:38:54,https://www.reddit.com/r/dataengineering/comments/1lkakxl/dbt_type_2_tables/,1.0,False,False,False,False
+1lka20n,Data Engineering for Gen AI?,1,2,on_the_mark_data,"I'm not talking about Gen AI doing data engineering work... specifically what does data engineering look like for supporting Gen AI services/products?
+
+Below are a few thoughts from what i've seen in the market and my own building; but I would love to hear what others are seeing!
+
+1. A key differentiator for quality LLM output is providing it great context, thus the role of information organization, data mining, and information retrieval is becoming more important. With that said, I don't see traditional data modeling fully fitting this paradigm given that the relationship are much more flexible with LLMs. Something I'm thinking about is what are identifiers around ""text themes"" an modeling around that (I could 100% be over complicating this though).
+
+2. I think security and governance controls are going to become more important in data engineering. Before LLMs, it was pretty hard to expose sensitive data without gross negligence. Today with consumer focused AI, people are sending PII to these AI tools that are then sending it to their external APIs (especially among non-technical users). I think people will come to their senses soon, but the barriers of protection via processes and training have been eroded substantially with the easy adoption of AI.
+
+3. Data integrations with third parties is going to become trivial. For example, say you don't have budget for Fivetran and have to build your own connection from Salesforce to your data warehouse. The process of going through API docs, building a pipeline, parsing nested JSON, dealing with edge cases, etc takes a long time. I see a move towards offloading this work to AI ""agents"" (loaded term now I know), but essentially I'm seeing traction with MCP server. So data eng work is less around building data models for other humans, but instead for external AI agents to work with.
+
+Is this matching what you are seeing?
+
+edit: typos",2025-06-25 16:19:29,https://www.reddit.com/r/dataengineering/comments/1lka20n/data_engineering_for_gen_ai/,1.0,False,False,False,False
+1lk4drr,How to avoid Bad Data before it breaks your Pipeline with Great Expectations in Python ETL…,3,0,sshetty03,"Ever struggled with bad data silently creeping into your ETL pipelines?
+
+I just published a hands-on guide on using Great Expectations to validate your CSV and Parquet files before ingestion. From catching nulls and datatype mismatches to triggering Slack alerts — it's all in here.
+
+If you're working in data engineering or building robust pipelines, this one’s worth a read",2025-06-25 12:30:45,https://medium.com/@subodh.shetty87/how-to-bad-data-before-it-breaks-your-pipeline-with-great-expectations-in-python-etl-workflows-f7d191b5aa03,0.64,False,False,False,False
+1ljl4eq,Top Lists Compilation,1,0,NowYouShallSee,"Hi! For a personal project, I’m trying to compile a ton of metrically ordered data of all sorts of categories. I’m looking for things like the largest lakes, highest population dense countries, baseball players with the most home runs, highest grossing movies of all time, etc. While I could individually go and search for thing I can think of, I was want to find categories that don’t come to mind. I’ve tried to mess around with data scraping Wikipedia but the data is gathered inconsistently. Any suggestions for websites or methods I could use to gather a ton of these lists? Any suggestions are helpful!",2025-06-24 19:52:01,https://www.reddit.com/r/dataengineering/comments/1ljl4eq/top_lists_compilation/,0.6,False,False,False,False
+1ljwjaw,Curious about next steps as a mid career DE: Cert or Projects,0,1,hijkblck93,"Unfortunately my contract ended so I’ve been laid off again. This is my second layoff in about 8 months. My first one was in Nov 2024. I’ve been IT about 8 years and 4 in data specifically. 
+I’m not sure what I may need to do next and wanted to gather feedback. 
+I know most recruiters care about experience over certs and degrees, roughly. I know degrees and certs can be either or. But I have a Masters degree and SQL certification. I wanted to know which would be more beneficial to get another cert or do projects. I know projects are to show expertise but I have several years of experience I can speak too. 
+So my question is which will be the most beneficial. Or do I just have to wait for an opportunity. Any tips are appreciated. ",2025-06-25 04:34:27,https://www.reddit.com/r/dataengineering/comments/1ljwjaw/curious_about_next_steps_as_a_mid_career_de_cert/,0.5,False,False,False,False
+1ljwhsq,Data Engineer Looking to Upskill in GenAI — Anyone Tried Summit Mittal’s Course?,0,9,Physical_Shelter_285,"**Hi everyone,**
+
+As we all know, GenAI is rapidly transforming the tech landscape, and I’m planning to upskill myself in this domain.
+
+I have around 4 years of experience in data engineering, and after some research, the **Summit Mittal GenAI Master Program** caught my attention. It seems to be one of the most structured courses available, but it comes with a hefty price tag of ₹50,000.
+
+Before I commit, I’d love to hear from those who’ve actually taken this course:
+
+* Did it truly help you land better career opportunities?
+* Does it offer real-world, industry-relevant projects and skills?
+* Was it worth the investment?
+
+Also, if you’ve come across **any other high-value or affordable courses (or even YouTube resources)** that helped you upskill in GenAI effectively, please do share your recommendations.
+
+Your feedback would mean a lot—thanks in advance!",2025-06-25 04:32:06,https://www.reddit.com/r/dataengineering/comments/1ljwhsq/data_engineer_looking_to_upskill_in_genai_anyone/,0.4,False,False,False,False
+1ljte6w,"do you load data from ETL system to both database and storage? if yes, what kind of data you load to storage?",0,12,BBHUHUH,"I design the whole pipeline when gathering data from ETL system before loading to Databricks, many articles said you should load data to database then load to storage before loading to Databricks platform which storage is for cold data that's not updated frequently, history backup, raw data like JSON Parquet, processed data from DB. is that best practice to do it? ",2025-06-25 01:50:34,https://www.reddit.com/r/dataengineering/comments/1ljte6w/do_you_load_data_from_etl_system_to_both_database/,0.5,False,False,False,False
+1lk7y3r,Looking for a Dedicated Data Engineering Study Partner,0,50,IllMathematician6297,"Hi I have 3+ experience in IT female, trying for switch and , now started learning data engineering subjects mainly Pyspark, ETL, Cloud, Pandas, Hive. If anyone interested to study with me please message. Serious study partners only allowed. Every day without fail two hours study sessions. ",2025-06-25 14:58:56,https://www.reddit.com/r/dataengineering/comments/1lk7y3r/looking_for_a_dedicated_data_engineering_study/,0.5,False,False,False,False
+1lk9ilw,Production data pipelines 3-5× faster using Claude + Keboola’s built-in AI agent interface,0,2,keboola,"[An example of Claude fixing a job error.](https://i.redd.it/fgdaw8ptp19f1.gif)
+
+*We recently launched full AI assistant integration inside our data platform (Keboola), powered by the* [Model Context Protocol (MCP)](https://help.keboola.com/ai/mcp-server/). It’s now live and already helping teams move 3-5x faster from spec to working pipeline.  
+  
+Here’s how it works
+
+**1. Prompt**
+
+ I ask Claude something like:
+
+>1. Pull contacts from my Salesforce CRM.  
+2. Pull my billing data from Stripe.  
+3. Join the contacts and billing and calculate LTV.  
+4. Upload the data to BigQuery.  
+5. Create a flow based on these points and schedule it to run weekly on Monday at 7:00am my time.
+
+**2. Build**  
+The AI agent connects to our Keboola project (via OAuth) using the Keboola MCP server, and:  
+– creates input tables  
+– writes working SQL transformations  
+– sets up individual components to extract data from or write into, which can be then connected into  fully orchestrated flows.  
+– auto-documents the steps
+
+**3. Run + Self-Heal**  
+The agent launches the job and monitors its status.  
+If the job fails, it doesn’t wait for you to ask - it automatically analyzes logs, identifies the issue, and proposes a fix.  
+If everything runs smoothly, it keeps going or checks in for the next action.  
+  
+**What about control & security?**  
+Keboola stays in the background. The assistant connects via scoped OAuth or access tokens, with no data copied or stored.  
+You stay fully in charge:  
+– Secure by design  
+– Full observability  
+– Governance and lineage intact  
+So yes - you can vibe-code your pipelines in natural language… but this time with trust.  
+  
+**The impact?**  
+*In real projects, we’re seeing a 3-5x acceleration in pipeline delivery — and fewer handoffs between analysts, engineers, and ops.*  
+  
+**Curious** if others are giving LLMs access to production tooling.  
+**What workflows have worked (or backfired) for you?**
+
+**Want to try it yourself?** Create your first project[ here](https://connection.us-east4.gcp.keboola.com/wizard?utm_campaign=MCP_launch&utm_source=reddit&utm_medium=post&utm_content=reddit).",2025-06-25 15:59:22,https://www.reddit.com/r/dataengineering/comments/1lk9ilw/production_data_pipelines_35_faster_using_claude/,0.36,False,False,False,False
+1ljk8pn,Data engineers getting wrecked by schema changes - would you pay for this?,0,3,Zestyclose-Lynx-1796,"Tool concept:
+
+1. Visualizes cross-DB column lineage.
+2. Traces ad-hoc queries (Slack/notebooks) breaking your dashboards?
+3. Alerts when schemas break your Dashboards
+
+Real Talk needed:
+
+* If not, What's the ONE feature that'd make you actually pay for it?
+
+If 5+ people say ‘yes, but only if it does X’ I’ll build it.
+
+Otherwise, I’ll pivot.
+
+Early MVP: [tesser](https://www.tesser.cloud/)",2025-06-24 19:17:55,https://www.reddit.com/r/dataengineering/comments/1ljk8pn/data_engineers_getting_wrecked_by_schema_changes/,0.18,False,False,False,False
+1lk35s6,Why You Need a Data Lakehoue?,0,28,dyzcs,"# Background to the introduction of Paimon and the main issues addressed
+
+**1. Offline Timeliness Bottlenecks**
+
+From the internal applications shared by various companies, most of the scenarios are Lambda architecture at the same time. The biggest problem of offline batch processing architecture is storage and timeliness. Hive itself has limited capability on storage, most of the scenarios are **INSERT OVERWRITE**, and basically do not care about the file organization form.
+
+Paimon on behalf of the lake framework can be fine management of each file, in addition to simple **INSERT OVERWRITE**, with a more powerful ACID capabilities, can stream write to achieve minute-level updates.
+
+**2. Real-Time Pipeline Headaches**
+
+**Flink + MQ-based real-time pipeline, the main problems include:**
+
+1. Higher cost, numerous technology stacks around Flink, high management and operation and maintenance costs; and because the intermediate results do not land, a large number of dump tasks are needed to assist in problem localization and data repair;
+2. task stability, stateful computation leads to delays and other problems;
+3. intermediate results do not land, a large number of auxiliary tasks are needed to assist in troubleshooting problems.
+
+So we can qualitatively give Paimon to solve the problem of a conclusion: unify the flow batch link, improve the time and reduce costs at the same time.
+
+# Core scenarios and solutions
+
+**1. Unified Data Ingestion (Upgrading ODS Layers)**
+
+In the sharing of major companies, it is mentioned about using Paimon instead of the traditional Hive ODS layer, and Paimon is used as the unified mirror table of the whole business database to improve the timeliness of the data link and optimize the storage space.
+
+The actual production link brings the following benefits:
+
+1. In the traditional offline and real-time links, ODS is carried by Hive table and MQ (usually Kafka) respectively, in the new link Paimon table is used as a unified storage for ODS, which can satisfy both streaming and batch reads;
+2. After adopting Paimon, since the whole link is quasi-real-time, the processing time can be shortened from hourly to minute level, usually controlled within ten minutes;
+3. Paimon has good support for concurrent write operations, and Paimon supports both primary and non-primary key tables;
+
+It is worth mentioning here that Shopee has developed a Paimon Branch-based “day-cut function”. Simply put, the data is sliced according to the day, avoiding the problem of redundant storage of data in the full-volume partition.
+
+In addition, the Paimon community also provides a set of tools that can help you carry out schema evolution, synchronize MySQL or even Kafka data to Paimon, and add columns upstream, the Paimon table will also follow the increase in columns.
+
+**2. Dimension Tables for Lookup Joins**
+
+Paimon primary key table as a dimension table scenario, there are mature applications in major companies, the actual production environment has been tested many times.
+
+Paimon as a dimension table scenarios are divided into two categories, one is the real-time dimension table: through the Flink task to pick up the business database real-time updates; the other is the offline dimension table, that is, through the Spark offline task T +1 update, is also the vast majority of data scenarios of the dimension table.
+
+Paimon dimension table can also support Flink Streamin SQL tasks and Flink Batch tasks.
+
+**3. Paimon Building Wide Tables**
+
+Paimon and many other frameworks, support Partial Update, LSM Tree architecture makes Paimon has a very high point checking and merging performance, but here to pay special attention to a few points:
+
+Performance bottlenecks, in the ultra-large-scale data update or ultra-multi-column update scenarios, the background merger performance will have a significant decline, need to be careful to test the use of;
+
+Sequence Group sorting, when the business has more than one stream for the splicing, will be given to each stream definition of a separate Sequence Group, the Sequence Group sorting fields need to be reasonably selectable, and even have more than one field sorting, the Sequence Group will have to be used in the same way as the other frameworks. There will even be multiple field sorting;
+
+**4. PV/UV Tracking**
+
+In the example of PayPal calculating PV/UV metrics, it was previously implemented using Flink's full stateful links, but then it was found difficult to migrate a large number of operations to this model, so it was replaced with Paimon.
+
+Paimon's upsert (update or insert) update mechanism is utilized for de-duplication, and Paimon's lightweight logging, changlog, is used to consume the data and provide real-time PV (Page View) and UV calculations downstream.
+
+In terms of overall resource consumption, the Paimon solution resulted in a 60% reduction in overall CPU utilization, while checkpoint stability was significantly improved. Additionally, because Paimon supports point-to-point writes, task rollback and reset times are dramatically reduced. The overall architecture has become simpler, and therefore a reduction in business development costs has been realized.
+
+**5. Lakehouse OLAP Pipelines**
+
+Because of the high degree of integration between Spark and Paimon, some ETL operations are performed through Spark or Flink, data is written to Paimon, z-order sorting, clustering, and even building file-level indexes based on Paimon, and then OLAP queries are performed through Doris or StarRocks, so that the full link can be achieved! OLAP effect.
+
+# Summary
+
+Basically, the above content is the major companies to land the main scene, of course, there are some other scenarios we will continue to add.",2025-06-25 11:28:34,https://www.reddit.com/r/dataengineering/comments/1lk35s6/why_you_need_a_data_lakehoue/,0.35,False,False,False,False
